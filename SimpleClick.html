@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>SimpleClick</title>
+		<meta name="description" content="">
+		<meta name="author" content="Kenneth Norris">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	</head>
+
+	<body>
+		<div>
+			
+			<input id="nameInput"></input>
+			<p>Hello, <span id="nameField">guest</span>.</p>
+			
+			<button id="clickMe">Click Me!</button>
+			<p>You have clicked the button <span id="numClicks">0 times</span>.</p>
+		</div>
+		<div id="mouseOverMe"><p>Put the mouse here!</p></div>
+		<div class="highlightText"><p>This is some text.</p></div>
+		<div><p>This is some other text.</p></div>
+		<div class="highlightText"><p>This text is important, too.</p></div>
+		
+		<script>
+			var clicks = 0;
+			
+			function clickHandler() {
+				clicks++;
+				var numClicksSpan = document.getElementById('numClicks');
+				if (clicks == 1) {
+					numClicksSpan.innerHTML = 'once';
+				} else {
+					numClicksSpan.innerHTML = clicks + ' times';
+				}
+			}
+			
+			var button = document.getElementById('clickMe');
+			button.addEventListener('click', clickHandler);
+			
+			function makeBold() {
+				var divs = document.getElementsByClassName('highlightText');
+				for (var i = 0; i < divs.length; i++) {
+					divs[i].style.color = 'red';
+					divs[i].style.fontWeight = 'bold';
+				}
+			}
+			
+			function restore() {
+				var divs = document.getElementsByClassName('highlightText');
+				for (var i = 0; i < divs.length; i++) {
+					divs[i].style.color = 'black';
+					divs[i].style.fontWeight = 'normal';
+				}
+			}
+			
+			var mouseOverMeDiv = document.getElementById('mouseOverMe');
+			mouseOverMeDiv.addEventListener('mouseover', makeBold);
+			mouseOverMeDiv.addEventListener('mouseout', restore);
+			
+			function nameHandler(e) {
+				if (e.keyCode == 13) {
+					var nameImput = document.getElementById('nameInput');
+					var nameField = document.getElementById('nameField');
+					if (nameInput.value == '') {
+						nameField.innerHTML = 'guest';
+						nameField.style.backgroundColor = 'white';
+						nameField.style.textTransform = 'none';
+					} else {
+						nameField.innerHTML = nameInput.value;
+						nameField.style.backgroundColor = 'cyan';
+						nameField.style.textTransform = 'capitalize';
+					}
+				}
+			}
+			
+			document.addEventListener('keyup', nameHandler);
+		</script>
+	</body>
+</html>

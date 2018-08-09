@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>DOMTest</title>
+		<meta name="author" content="Kenneth Norris" />
+		<!-- Date: 2018-08-09 -->
+	</head>
+	<body>
+		<div>
+			You have visited this page <span id="report"> </span> times.<br />
+			Your last visit was <span id="lastVisitDate"> </span><br />
+		</div>
+		
+		<script>			
+			var timesVisited = 0;
+			var lastVisitDate = 'never';
+			
+			if (localStorage.lastVisit) {
+				var lastVisit = JSON.parse(localStorage.lastVisit);
+				timesVisited = lastVisit.numVisits;
+				lastVisitDate = lastVisit.date;
+			}
+			
+			document.getElementById('lastVisitDate').innerHTML = lastVisitDate;
+			
+			timesVisited++;
+			document.getElementById('report').innerHTML = timesVisited;
+			
+			var myLastVisit = { };
+			myLastVisit.date = new Date();
+			myLastVisit.numVisits = timesVisited;
+			localStorage.lastVisit = JSON.stringify(myLastVisit);
+		</script>
+
+	</body>
+</html>
+
