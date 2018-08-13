@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>jQueryTest</title>
+		<meta name="author" content="Kenneth Norris" />
+		<script src="scripts/jquery.js"></script>
+		<!-- Date: 2018-08-10 -->
+	</head>
+	<body>
+		<button id="clickMe">Click Me!</button>
+		<p>You've clicked the button <span id="numClicks">0 times</span>.</p>
+		
+		<hr>
+		<h1>Grocery List Generator</h1>
+		<input id="itemField">
+		<br />
+		<ul>
+			<span id="list"></span>
+		</ul>
+		
+		<hr>
+		<h1>Favorite Animals</h1>
+		<ul class="highlight">
+			<li>dog</li>
+			<li>cat</li>
+			<li>elephant</li>
+			<li>bear</li>
+		</ul>
+		
+		<ul>
+			<li>canary</li>
+			<li>eagle</li>
+		</ul>
+		
+		<script>
+			var clicks = 0;
+			
+			function clickHandler() {
+				clicks++;
+				if (clicks == 1) {
+					$('#numClicks').html('once');
+				} else {
+					$('#numClicks').html(clicks + ' times');
+				}
+			}
+			$('#clickMe').click(clickHandler);
+			
+			function keyPressHandler(e) {
+				if (e.keyCode == 13) {
+					if ($('#itemField').val() != '') {
+						$('#list').append('<li>' + $('#itemField').val() + '</li>');
+						$('#itemField').val('');
+					}
+				}
+			}
+			$('#itemField').keyup(keyPressHandler);
+			
+			/*
+			$('li').click(function() {
+				if (($(this).css('font-weight') == 'bold') || ($(this).css('font-weight') == '700')) {
+					$(this).css('font-weight', 'normal');
+				} else {
+					$(this).css('font-weight', 'bold');
+				}
+			});
+			
+			$('li').hover(
+				function () {
+					$(this).css('color', 'red');
+					$(this).css('font-size', '120%');
+				},
+				function () {
+					$(this).css('color', 'black');
+					$(this).css('font-size', '100%');
+				}
+			);
+			*/
+			
+			$('ul.highlight').find('li').on({
+				mouseenter: function () {
+					$(this).css('color', 'red');
+					$(this).css('font-size', '120%');
+				},
+				mouseleave: function () {
+					$(this).css('color', 'black');
+					$(this).css('font-size', '100%');
+				},
+				click: function() {
+					if (($(this).css('font-weight') == 'bold') || ($(this).css('font-weight') == '700')) {
+						$(this).css('font-weight', 'normal');
+					} else {
+						$(this).css('font-weight', 'bold');
+					}
+				}
+			});
+		</script>
+
+	</body>
+</html>
+

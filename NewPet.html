@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>My New Pet</title>
+		<meta name="author" content="Kenneth Norris" />
+		<!-- Date: 2018-08-10 -->
+		<script src="scripts/jquery.js"></script>
+	</head>
+	<body>
+		<form>
+			<select name="choose">
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+			<p>
+				<input type="radio" name="species" value="dog">Dog</input>
+				<input type="radio" name="species" value="cat">Cat</input>
+				<input type="radio" name="species" value="bird">Bird</input>				
+			</p>
+			<p>
+				<input type="checkbox" name="disposition" value="happy">Happy</input>
+				<input type="checkbox" name="disposition" value="cute">Cute</input>
+				<input type="checkbox" name="disposition" value="smart">Smart</input>
+			</p>	
+			<p>
+				<input type="checkbox" name="otherTraits" value="rabid">Rabid</input>
+				<input type="checkbox" name="otherTraits" value="stinky">Stinky</input>
+				<input type="checkbox" name="otherTraits" value="wet">Wet</input>
+			</p>			
+		</form>
+		<p>
+			I'd like to buy a new <span id="featureSpan"></span> 
+			<span id="genderSpan"></span> <span id="speciesSpan">animal</span>.
+		</p>
+		
+		<script>
+			$("select[name='choose']").change(function(){
+				$('#genderSpan').html($(this).val());
+			});
+			
+			$("input[name='species']:radio").change(function(){
+				if ($(this).prop('checked')) {
+					$('#speciesSpan').html($(this).val());
+				}
+			});
+			
+			var allChecked = [];
+			
+			$("input[name='disposition']:checkbox").change(function() {
+				var value = $(this).val();
+				if ($(this).prop('checked')) {
+					allChecked.push(value);
+				} else {
+					var index = allChecked.indexOf(value);
+					if (index != -1) {
+						allChecked.splice(index, 1);
+					}
+				}
+				$('#featureSpan').html('');
+				for (var i = 0; i < allChecked.length; i++) {
+					$('#featureSpan').append(allChecked[i]);
+					if (i < allChecked.length - 1) {
+						$('#featureSpan').append(', ');
+					} else {
+						$('#featureSpan').append(' ');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
+
