@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="scripts/react.js"></script>
+    <script src="scripts/react-dom.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="userContainer"></div>
+    <div id="hitCounter">This page has been viewed: <span id="timesContainer"></span> times.</div>
+    <script type="text/jsx">
+    		class HelloComponent extends React.Component {
+    			render() {
+    				return(
+    					<h1> Hello, React! </h1>
+    				);
+    			}
+    		}
+    		
+    		class HelloUser extends React.Component {
+    			render() {
+    				return(
+    					<h1> Hello, {this.props.name}! </h1>
+    				);
+    			}
+    		}
+    		
+    		class TimesViewed extends React.Component {
+    			constructor(props) {
+    				super(props);
+    				var timesViewed = 0;
+    				if (localStorage.timesViewed) {
+    					timesViewed = localStorage.timesViewed;
+    				}
+    				timesViewed++;
+    				this.state = { numViews: timesViewed};
+    				localStorage.timesViewed = timesViewed;
+    			}
+    			
+    			render() {
+    				return <span>{this.state.numViews}</span>;
+    			}
+    		}
+
+      ReactDOM.render(
+        <HelloComponent />,
+        document.getElementById('container')
+      );
+      
+      ReactDOM.render(
+        <HelloUser name="Ken" />,
+        document.getElementById('userContainer')
+      );
+      
+      ReactDOM.render(
+      	<TimesViewed />,
+      	document.getElementById('timesContainer')
+      )
+
+    </script>
+</body>
+</html>
