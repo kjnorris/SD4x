@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Filtered List Example</title>
+		<meta name="author" content="Kenneth Norris" />
+		<script src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+    		<script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<!-- Date: 2018-08-14 -->
+	</head>
+	<body>
+
+		<div id='container'></div>
+
+		<script type="text/jsx">
+			class FilteredList extends React.Component {
+				constructor(props) {
+					super(props);
+					var allItems = [ "anteater", "bear", "cat", 
+									"dog", "elephant"];
+					this.state = { initialItems: allItems,
+									currentItems: allItems };
+				}
+				
+				filterList(input) { // callback function
+					var updatedList = this.state.initialItems;
+					updatedList = updatedList.filter(function(item) {
+						return item.search(input.target.value) !== -1;
+					});
+					this.setState({ currentItems: updatedList });
+				}
+				
+				render() {
+					return (
+						<div><input type="text" placeholder="Search" onChange={this.filterList.bind(this)} />
+							<ListItems items={this.state.currentItems} />
+						</div>
+					);
+				}
+			};
+			
+			class ListItems extends React.Component {
+				render() {
+					return (
+						<ul> { this.props.items.map(function(item) {
+							return <li key={item}>{item}</li>
+						})}</ul>
+					);
+				}
+			};
+			
+			ReactDOM.render(<FilteredList />, document.getElementById('container'));
+		</script>
+	</body>
+</html>
+

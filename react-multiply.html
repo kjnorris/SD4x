@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Multiplier</title>
+		<meta name="author" content="Kenneth Norris" />
+		<script src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+    		<script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<!-- Date: 2018-08-14 -->
+	</head>
+	<body>
+		
+		<div id='container'></div>
+		
+		<script type="text/jsx">
+			class Multiplier extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = { input1: 0, input2: 0, product: 0 };
+					this.multiply = this.multiply.bind(this);
+				}
+				
+				multiply(id, val) {
+					if (id == 1) {
+						this.setState({ input1: val, product: this.state.input2 * val });
+					} else if(id == 2) {
+						this.setState({ input2: val, product: this.state.input1 * val });
+					}
+				}
+				
+				render() {
+					return (
+						<div>
+							<h3>Enter two numbers to multiply:</h3>
+							<NumberInputField id="1" action={this.multiply} />
+							<NumberInputField id="2" action={this.multiply} />
+							<OutputField product={this.state.product} />
+						</div>
+					);
+				}
+			}
+			
+			class NumberInputField extends React.Component {
+				constructor(props) {
+					super(props);
+					this.handleChange = this.handleChange.bind(this);
+				}
+				
+				handleChange(e) {
+					this.props.action(this.props.id, e.target.value);
+				}
+				
+				render() {
+					return (
+						<input onChange={this.handleChange}></input>
+					);
+				}
+			}
+			
+			class OutputField extends React.Component {
+				render() {
+					return (
+						<div>
+							The product is {this.props.product}
+						</div>
+					);
+				}
+			}
+			
+			ReactDOM.render(<Multiplier />, document.getElementById('container'));
+		</script>
+	</body>
+</html>
+

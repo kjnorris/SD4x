@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>To Do List</title>
+		<meta name="author" content="Kenneth Norris" />
+		<script src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+    		<script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<!-- Date: 2018-08-14 -->
+	</head>
+	<body>
+		
+		<div id='container'></div>
+		
+		<script type="text/jsx">
+			class TodoApp extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = { items: [], text: ' ', id: 0 };
+				}
+				
+				handleChange(e) {
+					this.setState({ text: e.target.value });
+				}
+				
+				handleSubmit(e) {
+					e.preventDefault(); // so as not to reload the page
+					var newItem = {text: this.state.text, id: this.state.id };
+					
+					this.setState( { 
+						items: this.state.items.concat(newItem),
+						text: ' ',
+						id: this.state.id + 1
+					});
+				}
+				
+				render() {
+					return (
+						<div>
+							<h3> TO-DO LIST</h3>
+							<TodoList items={this.state.items} />
+							<form onSubmit={this.handleSubmit.bind(this)}>
+								<input onChange={this.handleChange.bind(this)} value={this.state.text} />
+								<button type="Submit">Add</button>
+							</form>
+						</div>
+					);
+				}
+				
+			};
+			
+			class TodoList extends React.Component {
+				render() {
+					return (
+						<ul>
+							{this.props.items.map(function(item) {
+								return <TodoItem id={item.id} text={item.text} />
+							})}
+						</ul>
+					);
+				}
+			};
+			
+			class TodoItem extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = { amDone: false };
+				}
+				
+				handleClick() {
+					this.setState( { amDone: !this.state.amDone });
+				}
+				
+				render() {
+					var line = this.state.amDone ? 'line-through' : 'none';
+					return (
+						<li key={this.props.id} onClick={this.handleClick.bind(this)}
+							style={{textDecoration: line}}>
+							{this.props.text}
+						</li>
+					);
+				}
+			}
+			
+			ReactDOM.render(<TodoApp />, document.getElementById('container'));
+		</script>
+
+	</body>
+</html>
+
