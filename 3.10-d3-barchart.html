@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+<style>
+rect {
+  fill: darkred;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+rect:hover {
+  fill: darkblue;
+}
+
+</style>
+
+<script src="http://d3js.org/d3.v4.min.js"></script>
+
+</head>
+
+<body>
+<svg class="chart" height="200">
+</svg>
+<p>
+
+<input id="inputField"></input>
+<button onclick="insert();">Insert</button>
+
+<script>
+function insert() {
+     var value = document.getElementById('inputField').value;
+     //alert(value);
+     numbers.push(value);
+     drawChart();
+     document.getElementById('inputField').value = '';
+}
+
+function drawChart() {
+
+  var svg = d3.select("svg");
+
+  var selection = svg.selectAll("g")
+     .data(numbers)
+    .enter().append("g")
+    .attr("transform", (d,i) => { return "translate(" + 40*i + "," + (200-d) + ")"; });
+
+  selection.append("rect")
+    .attr("width", 39)
+    .attr("height", (d,i) => { return d; });
+
+   selection.append("text")
+    .attr("x", (d,i) => { return 25; })
+    .attr("y", (d,i) => { return 10; })
+    .text(function(d) { return d/10; });
+
+}
+
+
+var numbers = [40, 130, 75, 170];
+  
+drawChart();
+
+</script>
