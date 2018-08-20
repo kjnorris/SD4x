@@ -1,0 +1,22 @@
+Here are the results of your search:
+<ul>
+<% books.forEach( (book) => { %>
+
+<li>
+<i><%= book.title %></i>.
+
+<% book.authors.forEach( (author) => { if (author.name) { %>
+
+<%= author.name %>, 
+
+<% } }); %>
+
+<%= book.year %>.
+
+</li>
+
+<%  }); %>
+
+</ul>
+
+

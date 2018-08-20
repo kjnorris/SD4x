@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Show Me My Animals</title>
+</head>
+<body>
+	<p>Hello <%= name %>, nice to meet you.</p>
+	<p>Here are the animals you like:</p>
+	<ul>
+	<% animals.forEach((animal) => {%>
+		<li> <%= animal %> </li>
+	<% }); %>
+	</ul>
+	<br><br>
+	<a href='/public/form.html'>Back to form</a>
+</body>
+</html>
